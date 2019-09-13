@@ -69,7 +69,7 @@ class MessageForm extends Component {
                     style={{ marginBottom: "0.7em" }}
                     label={<Button icon={"add"} />}
                     labelPosition="left"
-                    placeHolder="Enter message here..."
+                    placeholder="Enter message here..."
                     className={
                         errors.some(error => error.message.includes("message")) ? "error" : ""
                     }

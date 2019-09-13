@@ -21,7 +21,7 @@ class MessagesHeader extends Component {
                         size="mini"
                         icon="search"
                         name="searchTerm"
-                        placeHolder="Search in messages..."
+                        placeholder="Search in messages..."
                     />
                 </Header>
             </Segment>
