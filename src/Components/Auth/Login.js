@@ -29,6 +29,10 @@ class Login extends Component {
                 .signInWithEmailAndPassword(this.state.email, this.state.password)
                 .then(signedInUser => {
                     console.log(signedInUser);
+                    this.setState({
+                        errors: [],
+                        loading: false
+                    });
                 })
                 .catch(err => {
                     console.error(err);
@@ -40,10 +44,7 @@ class Login extends Component {
         }
     };
 
-    isFormValid = ({ email, password }) => {
-        email && password;
-    };
-
+    isFormValid = ({ email, password }) => email && password;
     handleInputError = (errors, inputName) => {
         return errors.some(error => error.message.toLowerCase().includes(inputName)) ? "error" : "";
     };
