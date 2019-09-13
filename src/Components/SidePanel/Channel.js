@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { setCurrentChannel } from "../../Containers/Root/actions";
 class Channel extends Component {
     state = {
+        activeChannel: "",
         user: this.props.currentUser,
         channels: [],
         channelName: "",
@@ -30,6 +31,7 @@ class Channel extends Component {
         const firstChannel = this.state.channels[0];
         if (this.state.firstLoad && this.state.channels.length > 0) {
             this.props.setCurrentChannel(firstChannel);
+            this.setActiveChannel(firstChannel);
         }
         this.setState({ firstLoad: false });
     };
@@ -82,13 +84,19 @@ class Channel extends Component {
                 onClick={() => this.changeChannel(channel)}
                 name={channel.name}
                 style={{ opcaity: 0.7 }}
+                active={channel.id === this.state.activeChannel}
             >
                 # {channel.name}
             </Menu.Item>
         ));
 
     changeChannel = channel => {
+        this.setActiveChannel(channel);
         this.props.setCurrentChannel(channel);
+    };
+
+    setActiveChannel = channel => {
+        this.setState({ activeChannel: channel.id });
     };
 
     handleSubmit = event => {
