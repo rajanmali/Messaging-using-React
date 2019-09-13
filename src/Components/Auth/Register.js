@@ -95,7 +95,9 @@ class Register extends Component {
                             )}?d=identicon`
                         })
                         .then(() => {
-                            this.setState({ loading: false });
+                            this.saveUser(createdUser).then(() => {
+                                console.log("User saved");
+                            });
                         })
                         .catch(err => {
                             console.error(err);
