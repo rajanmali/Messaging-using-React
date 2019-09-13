@@ -11,7 +11,8 @@ class Register extends Component {
         password: "",
         passwordConfirmation: "",
         errors: [],
-        loading: false
+        loading: false,
+        usersRef: firebase.database().ref("users")
     };
 
     isFormValid = () => {
@@ -97,6 +98,10 @@ class Register extends Component {
                         .then(() => {
                             this.saveUser(createdUser).then(() => {
                                 console.log("User saved");
+                                this.setState({
+                                    errors: [],
+                                    loading: false
+                                });
                             });
                         })
                         .catch(err => {
@@ -115,6 +120,13 @@ class Register extends Component {
                     });
                 });
         }
+    };
+
+    saveUser = createdUser => {
+        return this.state.usersRef.child(createdUser.user.uid).set({
+            name: createdUser.user.displayName,
+            avatar: createdUser.user.photoURL
+        });
     };
 
     handleInputError = (errors, inputName) => {
