@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Form, Segment, Button, Header, Message, Icon } from "semantic-ui-react";
 import firebase from "../../firebase";
-
 class Login extends Component {
     state = {
         email: "",
@@ -19,7 +18,7 @@ class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        if (this.isFormValid(this.state)) {
+        if (this.isFormValid()) {
             this.setState({
                 errors: [],
                 loading: true
@@ -28,14 +27,12 @@ class Login extends Component {
                 .auth()
                 .signInWithEmailAndPassword(this.state.email, this.state.password)
                 .then(signedInUser => {
-                    console.log(signedInUser);
                     this.setState({
                         errors: [],
                         loading: false
                     });
                 })
                 .catch(err => {
-                    console.error(err);
                     this.setState({
                         errors: this.state.errors.concat(err),
                         loading: false
@@ -44,13 +41,32 @@ class Login extends Component {
         }
     };
 
-    isFormValid = ({ email, password }) => email && password;
+    isFormValid = () => {
+        let errors = [];
+        let error;
+        if (this.isFormEmpty(this.state)) {
+            //Error
+            error = { message: "Fill in all the fields." };
+            this.setState({ errors: errors.concat(error) });
+            return false;
+        } else {
+            //Form valid
+            return true;
+        }
+    };
+
+    isFormEmpty = ({ email, password }) => {
+        return !email.length || !password.length;
+    };
+
     handleInputError = (errors, inputName) => {
         return errors.some(error => error.message.toLowerCase().includes(inputName)) ? "error" : "";
     };
 
     render() {
         const { email, password, errors, loading } = this.state;
+        console.log(this.props.currentUser);
+
         return (
             <Grid textAlign="center" verticalAlign="middle" className="app">
                 <Grid.Column style={{ maxWidth: 450 }}>
