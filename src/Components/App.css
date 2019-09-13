@@ -1,0 +1,8 @@
+html,
+body,
+.app {
+    overflow: hidden;
+    height: 100vh;
+    background: #eee;
+    padding: 1em;
+}
