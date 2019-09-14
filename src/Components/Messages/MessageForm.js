@@ -169,6 +169,7 @@ class MessageForm extends Component {
                     <Button
                         fluid
                         color="teal"
+                        disabled={uploadState === "uploading"}
                         content="Upload Media"
                         onClick={this.openModal}
                         labelPosition="right"

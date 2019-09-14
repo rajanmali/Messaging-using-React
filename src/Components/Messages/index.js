@@ -5,6 +5,7 @@ import firebase from "../../firebase";
 import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
+import { access } from "fs";
 
 class Messages extends Component {
     state = {
@@ -12,7 +13,8 @@ class Messages extends Component {
         channel: this.props.currentChannel,
         user: this.props.currentUser,
         messages: [],
-        messagesLoading: true
+        messagesLoading: true,
+        numUniqueUsers: ""
     };
 
     componentDidMount() {
@@ -34,7 +36,20 @@ class Messages extends Component {
                 messages: loadedMessages,
                 messagesLoading: false
             });
+            this.countUniqueUsers(loadedMessages);
         });
+    };
+
+    countUniqueUsers = messages => {
+        const uniqueUsers = messages.reduce((acc, message) => {
+            if (!acc.includes(message.user.name)) {
+                acc.push(message.user.name);
+            }
+            return acc;
+        }, []);
+        const plural = uniqueUsers.length > 1 || uniqueUsers.length === 0;
+        const numUniqueUsers = `${uniqueUsers.length} user${plural ? "s" : ""}`;
+        this.setState({ numUniqueUsers });
     };
 
     displayMessages = messages =>
@@ -43,11 +58,16 @@ class Messages extends Component {
             <Message key={message.timestamp} message={message} user={this.state.user} />
         ));
 
+    displayChannelName = channel => (channel ? `# ${channel.name}` : "");
+
     render() {
-        const { messages, messagesRef, channel, user } = this.state;
+        const { messages, messagesRef, channel, user, numUniqueUsers } = this.state;
         return (
             <React.Fragment>
-                <MessagesHeader />
+                <MessagesHeader
+                    channelName={this.displayChannelName(channel)}
+                    numUniqueUsers={numUniqueUsers}
+                />
                 <Segment>
                     <Comment.Group className="messages">
                         {this.displayMessages(messages)}
