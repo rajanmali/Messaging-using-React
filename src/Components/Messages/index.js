@@ -5,7 +5,6 @@ import firebase from "../../firebase";
 import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
-import { access } from "fs";
 
 class Messages extends Component {
     state = {
