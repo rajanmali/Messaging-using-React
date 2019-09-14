@@ -18,7 +18,8 @@ class Messages extends Component {
         numUniqueUsers: "",
         searchTerm: "",
         searchLoading: false,
-        searchResults: []
+        searchResults: [],
+        isChannelStarred: false
     };
 
     componentDidMount() {
@@ -72,6 +73,23 @@ class Messages extends Component {
         return channel ? `${this.state.privateChannel ? "@" : "#"} ${channel.name}` : "";
     };
 
+    handleStar = () => {
+        this.setState(
+            prevState => ({
+                isChannelStarred: !prevState.isChannelStarred
+            }),
+            () => this.starChannel()
+        );
+    };
+
+    starChannel = () => {
+        if (this.state.isChannelStarred) {
+            console.log("Starred");
+        } else {
+            console.log("Unstarred");
+        }
+    };
+
     handleSearchChange = event => {
         this.setState(
             {
@@ -110,7 +128,8 @@ class Messages extends Component {
             searchTerm,
             searchResults,
             searchLoading,
-            privateChannel
+            privateChannel,
+            isChannelStarred
         } = this.state;
         return (
             <React.Fragment>
@@ -120,6 +139,8 @@ class Messages extends Component {
                     handleSearchChange={this.handleSearchChange}
                     searchLoading={searchLoading}
                     isPrivateChannel={privateChannel}
+                    handleStar={this.handleStar}
+                    isChannelStarred={isChannelStarred}
                 />
 
                 <Segment>
