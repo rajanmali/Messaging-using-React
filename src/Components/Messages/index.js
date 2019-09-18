@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import MessagesHeader from "./MessagesHeader";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
+import Typing from "./Typing";
 import { setUserPosts } from "../../Containers/Root/actions";
 
 class Messages extends Component {
@@ -92,7 +93,7 @@ class Messages extends Component {
                 };
             }
             return acc;
-        }, { });
+        }, {});
         this.props.setUserPosts(userPosts);
     };
 
@@ -195,6 +196,10 @@ class Messages extends Component {
                         {searchTerm
                             ? this.displayMessages(searchResults)
                             : this.displayMessages(messages)}
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <span className="user__typing">Rajan is typing</span>
+                            <Typing />
+                        </div>
                     </Comment.Group>
                 </Segment>
 
