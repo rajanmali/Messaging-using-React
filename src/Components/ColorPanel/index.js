@@ -81,6 +81,14 @@ class ColorPanel extends Component {
             </React.Fragment>
         ));
 
+    removeListener = () => {
+        
+    }
+
+    componentWillUnmount() {
+        this.removeListener();
+    }
+
     render() {
         const { modal, primary, secondary, userColors } = this.state;
         return (
