@@ -201,6 +201,13 @@ class MessageForm extends Component {
             });
     };
 
+    componentWillUnmount() {
+        if (this.state.uploadTask !== null) {
+            this.state.uploadTask.cancel();
+            this.setState({ uploadTask: null });
+        }
+    }
+
     render() {
         const {
             errors,

@@ -185,6 +185,17 @@ class Channel extends Component {
 
     isFormValid = ({ channelName, channelDetails }) => channelDetails && channelName;
 
+    removeListeners = () => {
+        this.state.channelsRef.off();
+        this.state.channels.forEach(channel => {
+            this.state.messagesRef.child(channel.id).off();
+        });
+    };
+
+    componentWillUnmount() {
+        this.removeListeners();
+    }
+
     render() {
         const { channels, modal } = this.state;
         return (

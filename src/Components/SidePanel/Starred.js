@@ -69,6 +69,14 @@ class Starred extends Component {
         this.props.setPrivateChannel(false);
     };
 
+    removeListeners = () => {
+        this.state.usersRef.child(`${this.state.user.uid}/starred`).off();
+    };
+
+    componentWillUnmount() {
+        this.removeListeners();
+    }
+
     render() {
         const { starredChannels } = this.state;
         return (
