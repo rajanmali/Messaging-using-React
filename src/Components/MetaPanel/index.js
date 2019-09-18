@@ -3,7 +3,8 @@ import { Segment, Accordion, Header, Icon } from "semantic-ui-react";
 
 class MetaPanel extends Component {
     state = {
-        activeIndex: 0
+        activeIndex: 0,
+        privateChannel: this.props.isPrivateChannel
     };
 
     setActiveIndex = (event, titleProps) => {
@@ -14,7 +15,10 @@ class MetaPanel extends Component {
     };
 
     render() {
-        const { activeIndex } = this.state;
+        const { activeIndex, privateChannel } = this.state;
+
+        if (privateChannel) return null;
+
         return (
             <Segment>
                 <Header as="h3" attached="top">
@@ -25,7 +29,34 @@ class MetaPanel extends Component {
                         active={activeIndex === 0}
                         index={0}
                         onClick={this.setActiveIndex}
-                    ></Accordion.Title>
+                    >
+                        <Icon name="dropdown" />
+                        <Icon name="info" />
+                        Channel Details
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 0}>Details</Accordion.Content>
+
+                    <Accordion.Title
+                        active={activeIndex === 1}
+                        index={1}
+                        onClick={this.setActiveIndex}
+                    >
+                        <Icon name="dropdown" />
+                        <Icon name="user circle" />
+                        Posters
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 1}>Details</Accordion.Content>
+
+                    <Accordion.Title
+                        active={activeIndex === 2}
+                        index={2}
+                        onClick={this.setActiveIndex}
+                    >
+                        <Icon name="dropdown" />
+                        <Icon name="pencil alternate" />
+                        Created by
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === 2}>Creator </Accordion.Content>
                 </Accordion>
             </Segment>
         );
