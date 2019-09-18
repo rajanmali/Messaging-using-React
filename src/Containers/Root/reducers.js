@@ -49,3 +49,21 @@ export const channel_reducer = (state = initialChannelState, action) => {
             return state;
     }
 };
+
+const initialColorState = {
+    primaryColor: "#4c3c4c",
+    secondaryColor: "#eeeeee"
+};
+
+export const colors_reducer = (state = initialColorState, action) => {
+    switch (action.type) {
+        case actionTypes.SET_COLORS:
+            return {
+                ...state,
+                primaryColor: action.payload.primaryColor,
+                secondaryColor: action.payload.secondaryColor
+            };
+        default:
+            return state;
+    }
+};
